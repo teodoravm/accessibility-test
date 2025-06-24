@@ -102,7 +102,7 @@ const Game: React.FC = () => {
                 </h1>
                 <div className="question" ref={fallbackElement} id="question" tabIndex={0}>
                     <MathProblemCanvas />
-                    <SRVisual description="This element represents the problem to solve: 5 + 3 = ?." />
+                    <SRVisual description="This element represents the problem to solve: 5 + 3 = question mark" />
                 </div>
                 <div className="game-area">
                     <div

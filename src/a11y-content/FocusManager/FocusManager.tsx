@@ -109,9 +109,12 @@ const FocusManager: React.FC<FocusManagerProps> = ({ children, fallbackElement, 
             const stillInDOM = scopeRef.current.contains(previousFocusedElement.current);
             console.error(stillInDOM);
             if (!stillInDOM) {
-                console.error(focusableElements);
+                console.error(previousFocusedElement.current);
+                console.error(focusableElements?.[focusableElements.indexOf(previousFocusedElement.current) + 1]);
                 const next =
-                    focusableElements?.[focusableElements.length - 1] || document.getElementById(fallbackElement);
+                    focusableElements?.[focusableElements.indexOf(previousFocusedElement.current) + 1] ||
+                    focusableElements?.[focusableElements.length - 1] ||
+                    document.getElementById(fallbackElement);
                 next?.focus();
             }
         });
