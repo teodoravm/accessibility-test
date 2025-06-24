@@ -1,0 +1,23 @@
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    background: white;
+    border: 1px solid #4CAF50;
+    border-radius: 10px;
+    color: #4CAF50;
+    padding: 8px 16px;
+    z-index: 100;
+}
+
+.skip-link:focus-visible {
+    position: absolute;
+    left: 5px;
+    top: 60px;
+    width: auto;
+    height: auto;
+    overflow: visible;
+}
