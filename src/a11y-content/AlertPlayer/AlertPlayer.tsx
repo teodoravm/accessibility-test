@@ -26,11 +26,17 @@ type AlertPlayerProps = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDi
  *   className="text-green-600"
  * />
  */
-const AlertPlayer: React.FC<AlertPlayerProps> = ({ message, ariaLive = "polite", ariaAtomic = true, delay, className }) => {
+const AlertPlayer: React.FC<AlertPlayerProps> = ({
+    message,
+    ariaLive = 'polite',
+    ariaAtomic = true,
+    delay,
+    className,
+}) => {
     const [displayMessage, setDisplayMessage] = useState<string | null>(null);
 
     useEffect(() => {
-        let timer:  NodeJS.Timeout;
+        let timer: NodeJS.Timeout;
         if (delay) {
             timer = setTimeout(() => {
                 setDisplayMessage(message);
@@ -38,7 +44,6 @@ const AlertPlayer: React.FC<AlertPlayerProps> = ({ message, ariaLive = "polite",
         } else {
             setDisplayMessage(message);
         }
-        
 
         return () => clearTimeout(timer);
     }, [message, delay]);
@@ -52,7 +57,7 @@ const AlertPlayer: React.FC<AlertPlayerProps> = ({ message, ariaLive = "polite",
     }
 
     return (
-        <div aria-atomic={ariaAtomic} aria-live={ariaLive} tabIndex={-1} className={className}>
+        <div aria-atomic={ariaAtomic} aria-live={ariaLive} tabIndex={-1} className={`${className} sr-only`}>
             {playMessage()}
         </div>
     );

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AccessibleImage, FocusManager, SRVisual, AlertPlayer } from '../a11y-content';
 import MathProblemCanvas from '../MathProblem/MathProblem';
 
@@ -14,6 +14,7 @@ const Game: React.FC = () => {
     const [inputAnswer, setInputAnswer] = useState('');
     const [isCorrect, setIsCorrect] = useState<boolean | null | undefined>(undefined);
     const fallbackElement = useRef<HTMLParagraphElement | null>(null);
+    const [moved, setMoved] = useState<boolean>(false);
 
     const handleDragStart = (e: React.DragEvent, apple: Apple, source: 'one' | 'two') => {
         e.dataTransfer.setData('apple', JSON.stringify(apple));
@@ -61,6 +62,10 @@ const Game: React.FC = () => {
             setContainerOne((prev) => prev.filter((a) => a.id !== apple.id));
             setContainerTwo((prev) => [...prev, apple]);
         }
+        setMoved(true);
+        setTimeout(() => {
+            setMoved(false);
+        }, 3000);
     };
 
     const imageURL = 'https://file.aiquickdraw.com/imgcompressed/img/compressed_7fd5709c36a8f1487b61f384ec967659.webp';
@@ -99,6 +104,7 @@ const Game: React.FC = () => {
             <div className="app" id="game">
                 <h1 className="title" id="title" tabIndex={0}>
                     Math Game: Addition
+                    <SRVisual description="The problem is 5+3 = question mark. There are two containers filled with apples. Move apples from one container to the other to help you solve the problem." />
                 </h1>
                 <div className="question" ref={fallbackElement} id="question" tabIndex={0}>
                     <MathProblemCanvas />
@@ -136,6 +142,11 @@ const Game: React.FC = () => {
                             />
                         </div>
                     </div>
+                    {moved && (
+                        <AlertPlayer
+                            message={`Moved apple. Container 1 now has ${containerOne.length} apples. Container 2 now has ${containerTwo.length} apples.`}
+                        />
+                    )}
                 </div>
                 <div className="answer-area">
                     <input
@@ -147,7 +158,7 @@ const Game: React.FC = () => {
                         aria-label="Enter your answer"
                     />
                     <button className="check-button" onClick={checkAnswer}>
-                        Check answer
+                        <SRVisual description="Careful! This button submits your answer." />❔
                     </button>
                     {isCorrect !== undefined && (
                         <AlertPlayer
